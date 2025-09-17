@@ -1,0 +1,13 @@
+node_modules
+.pnpm
+.pnpm-store
+.wrangler
+dist
+build
+.next
+coverage
+.env
+.env.*
+.git
+.gitignore
+Dockerfile

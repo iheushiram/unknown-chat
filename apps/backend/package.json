@@ -1,0 +1,43 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts --local --port 8787 --ip 0.0.0.0",
+    "build": "tsc && esbuild src/index.ts --bundle --format=esm --outfile=dist/index.js --external:cloudflare:*",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply unknown-chat-dev --local",
+    "db:studio": "drizzle-kit studio --port 4983",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.16.1",
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.3",
+    "drizzle-orm": "^0.44.5",
+    "hono": "^4.9.7",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.1.5",
+    "zod": "^4.1.9"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.9.2",
+    "@cloudflare/workers-types": "^4.20250917.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.5.1",
+    "drizzle-kit": "^0.31.4",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.37.1"
+  }
+}
