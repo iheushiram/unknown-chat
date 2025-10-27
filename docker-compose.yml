@@ -6,11 +6,11 @@ services:
       context: ./apps/frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://localhost:8787
-      - NEXT_PUBLIC_WS_URL=ws://localhost:8787
+      - NEXT_PUBLIC_API_URL=http://127.0.0.1:8787
+      - NEXT_PUBLIC_WS_URL=ws://127.0.0.1:8787
     volumes:
       - ./apps/frontend:/app
       - ./packages:/packages
@@ -23,14 +23,14 @@ services:
     networks:
       - unknown-chat-network
     command: pnpm dev
-  
+
   backend:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
     ports:
-      - "8787:8787"
-      - "9229:9229" #デバッグ用
+      - '8787:8787'
+      - '9229:9229' #デバッグ用
     environment:
       - NODE_ENV=development
       - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
@@ -44,17 +44,17 @@ services:
       - /app/node_modules
       - /packages/shared/node_modules
       - /packages/crypto/node_modules
-      - unknown-chat-db:/app/.wrangler
+      - unknown-chat-db:/root/.wrangler/state/v3
     networks:
       - unknown-chat-network
     command: pnpm dev
-  
+
   db-studio:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
     ports:
-      - "4983:4983" # Drizzele Studio
+      - '4983:4983' # Drizzele Studio
     environment:
       - NODE_ENV=development
       - DATABASE_URL=./dev.db

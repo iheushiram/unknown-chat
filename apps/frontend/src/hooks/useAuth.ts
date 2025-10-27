@@ -138,4 +138,13 @@ export function useAuth() {
 
     checkAuth()
   }, [getUserData, getToken, verifyToken, clearAuth])
+
+  return {
+    user,
+    isLoading,
+    isAuthenticated,
+    anonymousLogin,
+    logout,
+    getToken,
+  }
 }
