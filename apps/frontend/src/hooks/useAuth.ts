@@ -25,7 +25,7 @@ interface AuthResponse {
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
 
@@ -70,7 +70,10 @@ export function useAuth() {
         },
       )
 
+      if (!response.ok) return false
+
       const data = await response.json()
+      return data.success === true
     } catch (error) {
       console.log(`Token verification failed:`, error)
       return false
@@ -94,7 +97,6 @@ export function useAuth() {
         )
 
         const data: AuthResponse = await response.json()
-
         if (data.success) {
           saveAuth(data)
           return { success: true }
@@ -116,6 +118,8 @@ export function useAuth() {
 
   useEffect(() => {
     const checkAuth = async () => {
+      setIsLoading(true)
+
       const userData = getUserData()
       const token = getToken()
 

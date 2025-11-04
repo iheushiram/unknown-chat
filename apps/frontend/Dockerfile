@@ -11,8 +11,5 @@ COPY package.json pnpm-lock.yaml* ./
 
 RUN pnpm install --frozen-lockfile
 
-# 残りのソース
-COPY . .
-
 EXPOSE 3000
 CMD ["pnpm", "dev"]

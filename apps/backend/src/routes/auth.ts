@@ -32,7 +32,7 @@ auth.post('/anonymous', zValidator('json', anonymousLoginSchema), async (c) => {
     // user作成
     await c.env.DB.prepare(
       `
-            INSERT INTO users (id, nickname, is_anonymous, created_at, last_active)
+            INSERT INTO users (id, nickname, is_anonymous, created_at, last_active_at)
             VALUES (?, ?, ?, ?, ?)
             `,
     )
@@ -67,7 +67,7 @@ auth.post('/anonymous', zValidator('json', anonymousLoginSchema), async (c) => {
         nickname: finalNickname,
         isAnonymous: true,
       },
-      sesison: {
+      session: {
         token: sessionToken,
         expiresAt: expiresAt.toISOString(),
       },

@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
+import { auth } from './routes/auth'
+import { chat } from './routes/chat'
 
 type Bindings = {
   DB: D1Database
@@ -46,22 +48,7 @@ app.get('/api/info', (c) => {
   })
 })
 
-app.post('/api/auth/anonymous', async (c) => {
-  const id = crypto.randomUUID()
-
-  const token = crypto.randomUUID()
-  await c.env.SESSIONS.put(`session${id}`, JSON.stringify({ id, token }), {
-    expirationTtl: 24 * 60 * 60,
-  })
-
-  return c.json(
-    {
-      id,
-      token,
-      message: 'anonymous session created',
-    },
-    200,
-  )
-})
+app.route('/api/auth', auth)
+app.route('/api/chat', chat)
 
 export default app
